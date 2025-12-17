@@ -1,0 +1,37 @@
+PS C:\Users\treyl\stacked> & c:/Users/treyl/stacked/.venv/Scripts/python.exe c:/Users/treyl/stacked/query-database.py
+SQL Query Tool
+==================================================
+✓ Logged in as admin
+
+Executing query...
+
+    SELECT 
+        product_name AS name,
+        price,
+        availability_status AS availability,
+        stock_quantity,
+        category,
+        description
+    FROM products 
+    WHERE deleted_at IS NULL 
+    ORDER BY product_name ASC
+    
+
+==================================================
+
+✓ Query successful! Found 30 rows
+
+name                 | price                | availability         | stock_quantity       | category             | description
+------------------------------------------------------------------------------------------------------------------------------------------
+Annibale Colombo Bed | 1899.99              | In Stock             | 88                   | furniture            | The Annibale Colombo
+Annibale Colombo Sof | 2499.99              | In Stock             | 60                   | furniture            | The Annibale Colombo
+Apple                | 1.99                 | In Stock             | 8                    | groceries            | Fresh and crisp appl
+Bedside Table Africa | 299.99               | In Stock             | 64                   | furniture            | The Bedside Table in
+Beef Steak           | 12.99                | In Stock             | 86                   | groceries            | High-quality beef st
+Calvin Klein CK One  | 49.99                | In Stock             | 29                   | fragrances           | CK One by Calvin Kle
+Cat Food             | 8.99                 | In Stock             | 46                   | groceries            | Nutritious cat food
+Chanel Coco Noir Eau | 129.99               | In Stock             | 58                   | fragrances           | Coco Noir by Chanel
+Chicken Meat         | 9.99                 | In Stock             | 97                   | groceries            | Fresh and tender chi
+Cooking Oil          | 4.99                 | In Stock             | 10                   | groceries            | Versatile cooking oi
+
+... and 20 more rows
