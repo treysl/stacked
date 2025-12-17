@@ -8,7 +8,8 @@ import subprocess
 import threading
 import webbrowser
 import time
-import signal
+import socket
+import atexit
 
 # Add the current directory to path
 if getattr(sys, 'frozen', False):
@@ -20,6 +21,44 @@ else:
 
 os.chdir(BASE_DIR)
 sys.path.insert(0, BASE_DIR)
+
+# Lock file to prevent multiple instances
+LOCK_FILE = os.path.join(BASE_DIR, ".ecommerce_app.lock")
+
+def check_single_instance():
+    """Ensure only one instance is running"""
+    if os.path.exists(LOCK_FILE):
+        # Check if the process is still running by trying to connect to the port
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            result = sock.connect_ex(('127.0.0.1', 8001))
+            sock.close()
+            if result == 0:
+                print("E-Commerce App is already running!")
+                print("Check your system tray for the icon.")
+                webbrowser.open("http://localhost:8080/index.html")
+                sys.exit(0)
+        except:
+            pass
+        # Remove stale lock file
+        try:
+            os.remove(LOCK_FILE)
+        except:
+            pass
+    
+    # Create lock file
+    with open(LOCK_FILE, 'w') as f:
+        f.write(str(os.getpid()))
+
+def cleanup_lock():
+    """Remove lock file on exit"""
+    try:
+        os.remove(LOCK_FILE)
+    except:
+        pass
+
+# Register cleanup
+atexit.register(cleanup_lock)
 
 try:
     import pystray
@@ -231,12 +270,17 @@ def main():
     print("E-Commerce Platform Launcher")
     print("=" * 50)
     
+    # Prevent multiple instances
+    check_single_instance()
+    
     server = ECommerceServer()
     
     try:
         server.run()
     except KeyboardInterrupt:
         server.quit_app()
+    finally:
+        cleanup_lock()
 
 
 if __name__ == "__main__":
