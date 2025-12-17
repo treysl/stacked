@@ -182,56 +182,8 @@ ORDER BY o.order_date DESC;
 
 ## Troubleshooting
 
-- **Backend not starting**: Make sure port 8001 is not in use
+- **Backend not starting**: Make sure port 8000 is not in use
 - **Products not loading**: Ensure backend server is running and database is initialized
 - **CORS errors**: Make sure backend CORS middleware is configured correctly
 - **Database errors**: Delete `database.db` and run `init_db.py` again
-
-## Packaging as Standalone Application
-
-You can package this application as a standalone Windows executable with a system tray icon.
-
-### Quick Start (Development)
-
-Run the launcher script directly:
-```bash
-python app_launcher.py
-```
-
-This will:
-1. Start the backend server on port 8001
-2. Start the frontend server on port 8080
-3. Open the app in your default browser
-4. Show a system tray icon (green = running, red = stopped)
-
-### Building the Executable
-
-Run the build script:
-```bash
-build_exe.bat
-```
-
-This will create `dist\ECommerceApp\ECommerceApp.exe`
-
-### System Tray Features
-
-- **Green icon**: Server is running
-- **Red icon**: Server is stopped
-- **Yellow icon**: Server is starting
-
-Right-click the tray icon for options:
-- Open E-Commerce App
-- Open API Docs
-- Restart Server
-- Quit
-
-### Distribution
-
-To distribute the application, copy the entire `dist\ECommerceApp\` folder to another computer. The folder contains:
-- ECommerceApp.exe (main executable)
-- All required Python libraries
-- Frontend files
-- Backend files
-
-No Python installation required on the target machine!
 
